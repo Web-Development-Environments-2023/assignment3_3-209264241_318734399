@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d23822a"],{fda7:function(e,t,i){"use strict";i.r(t);var n=function(){var e=this,t=e._self._c;return t("div",[t("RecipePreviewList",{attrs:{title:"My Recipes"}})],1)},s=[],c=i("99d8"),a={components:{RecipePreviewList:c["a"]}},p=a,r=i("2877"),u=Object(r["a"])(p,n,s,!1,null,null,null);t["default"]=u.exports}}]);
+//# sourceMappingURL=chunk-2d23822a.4160c6bc.js.map
