@@ -95,25 +95,13 @@
     async created() {
       try {
         let response;
-<<<<<<< HEAD
         try {
           response = await this.axios.get(
-=======
-        // response = this.$route.params.response;
-        // console.log(response);
-        try {
-          response = await this.axios.get(
-            // "https://test-for-3-2.herokuapp.com/recipes/info",
->>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
             this.$root.store.server_domain +
               "/users/recipes/info?recipeId=" +
               this.$route.params.recipeId
             
           );
-<<<<<<< HEAD
-=======
-          // console.log("response.status", response.status);
->>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
           if (response.status !== 200) this.$router.replace("/NotFound");
         } catch (error) {
           console.log("error.response.status", error.response.status);
@@ -170,10 +158,4 @@
     margin-right: auto;
     width: 50%;
   }
-<<<<<<< HEAD
-=======
-  /* .recipe-header{
-  
-  } */
->>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
   </style>
