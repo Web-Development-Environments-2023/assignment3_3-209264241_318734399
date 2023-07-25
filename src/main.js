@@ -2,9 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 import routes from "./routes";
 import VueRouter from "vue-router";
+// import { VueCookies } from "vue-cookies";
+// Vue.use(VueCookies);
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
@@ -24,6 +26,9 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  ModalPlugin,
+  FormCheckboxPlugin,
+  FormTextareaPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -36,6 +41,9 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  ModalPlugin,
+  FormCheckboxPlugin,
+  FormTextareaPlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
@@ -67,16 +75,36 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
+  // server_domain: "http://localhost:3000",
+  server_domain: "https://ronadav.cs.bgu.ac.il",
+  lastSearch: localStorage.lastSearch,
   username: localStorage.username,
-  login(username) {
+  async login(username) {
     localStorage.setItem("username", username);
     this.username = username;
     console.log("login", this.username);
+    localStorage.setItem("lastSearch", "no last search");
+    this.lastSearch = "no last search";
+    try {
+      await fetch(`${this.server_domain}/setUsername`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+    } catch (error) {
+      console.error("Error occurred while setting username:", error);
+      // Handle the error appropriately, such as displaying an error message to the user
+    }
+    
   },
   logout() {
     console.log("logout");
     localStorage.removeItem("username");
     this.username = undefined;
+    localStorage.removeItem("lastSearch");
+    this.lastSearch = "no last search";
   },
 };
 console.log(shared_data);

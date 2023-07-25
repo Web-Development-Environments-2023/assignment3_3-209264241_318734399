@@ -1,75 +1,169 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
+  <div id="pre">
+    <div v-if="$root.store.username && !isNaN(recipe.aggregateLikes)">
+      <div v-if="favorite == 0">
+        <img
+          @click="AddToFavorites"
+          width="35"
+          height="35"
+          src="https://icon-library.com/images/favorite-icon-png/favorite-icon-png-1.jpg"
+        />
       </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
+      <div v-else>
+        <img
+          width="40"
+          height="40"
+          src="https://icon-library.com/images/favorite-icon/favorite-icon-1.jpg"
+        />
+      </div>
     </div>
-  </router-link>
+    <!-- add here -->
+    <router-link
+      :to="{ name: this.to, params: { recipeId: recipe.id } }"
+      class="recipe-preview"
+    >
+      <div class="recipe-body">
+        <img :src="recipe.image" class="recipe-image" />
+      </div>
+      <div class="recipe-footer">
+        <div v-if="history == 0" style="color:green;">
+          <div :title="recipe.title" class="recipe-title">
+            {{ recipe.title }}
+          </div>
+        </div>
+        <div v-else style="color:grey;">
+          <div :title="recipe.title" class="recipe-title">
+            {{ recipe.title }}
+          </div>
+        </div>
+        <ul class="recipe-overview">
+          <li>{{ recipe.readyInMinutes }} minutes</li>
+          <li v-if="!isNaN(recipe.aggregateLikes)">
+            {{ recipe.aggregateLikes }} likes
+          </li>
+          <img
+            v-if="recipe.vegan"
+            width="50"
+            height="50"
+            src="https://png.monster/wp-content/uploads/2022/03/png.monster-25.png"
+          />
+          <img
+            v-if="recipe.vegetarian"
+            width="50"
+            height="50"
+            src="https://cdn0.iconfinder.com/data/icons/eco-food-and-cosmetic-labels/128/Artboard_45--2-512.png"
+          />
+          <img
+            v-if="recipe.glutenFree"
+            width="50"
+            height="50"
+            src="https://cdn-icons-png.flaticon.com/512/1488/1488167.png"
+          />
+        </ul>
+      </div>
+    </router-link>
+  </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
-  },
   data() {
     return {
-      image_load: false
+      favorite: 0,
+      history: "blue",
+      to: "recipe",
     };
+  },
+  mounted() {
+    
+    if (this.$root.store.username) {
+      
+      this.inFavorites();
+      if (this.title != "Family Recipes" && this.title != "My Recipes") {
+        this.inHistory();
+      }
+    }
+
+    if (this.title == "Family Recipes") {
+      this.to = "view_family";
+    } else if (this.title == "My Recipes") {
+      this.to = "view_my_recipes";
+    }
+  },
+  methods: {
+    async inHistory() {
+      // check if in history
+      try {
+        const response = await this.axios.get(
+          this.$root.store.server_domain +
+            "/users/inHistory" +
+            "?recipeId=" +
+            this.recipe.id
+        );
+        if (typeof response === 'undefined') {
+          return;
+        }
+        this.history = response.data[0]["COUNT(*)"];
+      } catch (err) {
+        console.log(err.response);
+        this.form.submitError = err.response.data.message;
+      }
+    },
+    async inFavorites() {
+      // check if in favorites
+      try {
+        const response = await this.axios.get(
+          this.$root.store.server_domain +
+          "/users/inFavorites?recipeId=" + 
+            this.recipe.id
+        );   
+        this.favorite = response.data[0]["COUNT(*)"];
+        
+      } catch (err) {
+        console.log(err.response);
+        this.form.submitError = err.response.data.message;
+      }
+    },
+    async AddToFavorites() {
+      try {
+        const response = await this.axios.post(
+          this.$root.store.server_domain + "/users/favorites",
+          {
+            recipeId: this.recipe.id,
+          }
+        );
+        this.favorite = 1;
+      } catch (err) {
+        console.log(err.response);
+        this.form.submitError = err.response.data.message;
+      }
+    },
   },
   props: {
     recipe: {
       type: Object,
-      required: true
-    }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
-  }
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
 
 <style scoped>
+#pre {
+  border-radius: 5%;
+  border-style: groove;
+}
 .recipe-preview {
   display: inline-block;
-  width: 90%;
-  height: 100%;
+  width: 300px;
+  height: 200px;
   position: relative;
   margin: 10px 10px;
+  color: blue;
 }
 .recipe-preview > .recipe-body {
   width: 100%;
@@ -84,7 +178,7 @@ export default {
   margin-bottom: auto;
   display: block;
   width: 98%;
-  height: auto;
+  height: 98%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
