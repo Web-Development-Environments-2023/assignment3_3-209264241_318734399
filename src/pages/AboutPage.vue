@@ -31,6 +31,7 @@
               class="card-link"
               >LinkedIn</a
             >
+<<<<<<< HEAD
             <a
               href="https://github.com/Web-Development-Environments-2023/318734399"
               target="_blank"
@@ -43,6 +44,8 @@
               class="card-link"
               >hw 2</a
             >
+=======
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
           </b-card-body>
         </b-card>
         <b-card
@@ -75,6 +78,7 @@
               class="card-link"
               >LinkedIn</a
             >
+<<<<<<< HEAD
             <a
               href="https://github.com/Web-Development-Environments-2023/209264241"
               target="_blank"
@@ -87,6 +91,8 @@
               class="card-link"
               >hw 2</a
             >
+=======
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
           </b-card-body>
         </b-card>
       </b-card-group>

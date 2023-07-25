@@ -1,3 +1,53 @@
+<<<<<<< HEAD
+=======
+<!-- <template>
+    <div class="container">
+      <div v-if="recipe">
+        <div class="recipe-header mt-3 mb-4">
+          <h1>{{ recipe.title }}</h1>
+          <img :src="recipe.image" class="center" />
+        </div>
+        <div class="recipe-body">
+          <div class="wrapper">
+            <div class="wrapped"> -->
+              <!-- <div class="wrapped"> -->
+            <!-- Popularity: {{ recipe.popularity }}
+            </div>
+              <div class="mb-3">
+                <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
+              </div>
+              Ingredients for {{ recipe.servings }} servings:
+              <ul>
+                <li
+                  v-for="r in recipe.extendedIngredients.split(',')"
+                  :key="index + '_' + r.id"
+                >
+                  {{ r }}
+                </li>
+              </ul>
+            </div>
+            <div class="wrapped">
+              Instructions:
+              <ol> -->
+                <!-- {{
+                  recipe._instructions
+                }} -->
+                <!-- <li v-for="s in recipe.instructions.split(',')" :key="s.number">
+                  {{ s }}
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div> -->
+        <!-- <pre>
+        {{ $route.params }}
+        {{ recipe }}
+      </pre
+        > -->
+      <!-- </div>
+    </div>
+  </template> -->
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
   <template>
     <div class="container">
       <div v-if="recipe">
@@ -45,13 +95,25 @@
     async created() {
       try {
         let response;
+<<<<<<< HEAD
         try {
           response = await this.axios.get(
+=======
+        // response = this.$route.params.response;
+        // console.log(response);
+        try {
+          response = await this.axios.get(
+            // "https://test-for-3-2.herokuapp.com/recipes/info",
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
             this.$root.store.server_domain +
               "/users/recipes/info?recipeId=" +
               this.$route.params.recipeId
             
           );
+<<<<<<< HEAD
+=======
+          // console.log("response.status", response.status);
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
           if (response.status !== 200) this.$router.replace("/NotFound");
         } catch (error) {
           console.log("error.response.status", error.response.status);
@@ -108,4 +170,10 @@
     margin-right: auto;
     width: 50%;
   }
+<<<<<<< HEAD
+=======
+  /* .recipe-header{
+  
+  } */
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
   </style>

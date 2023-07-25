@@ -94,7 +94,14 @@ export default {
     async Login() {
       try {
         const response = await this.axios.post(
+<<<<<<< HEAD
           this.$root.store.server_domain + "/Login",
+=======
+          // "https://test-for-3-2.herokuapp.com/user/Login",
+          this.$root.store.server_domain + "/Login",
+          // "http://132.72.65.211:80/Login",
+          // "http://132.73.84.100:80/Login",
+>>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
 
           {
             username: this.form.username,
