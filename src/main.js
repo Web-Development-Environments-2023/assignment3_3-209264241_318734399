@@ -75,13 +75,8 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
-<<<<<<< HEAD
   // server_domain: "http://localhost:3000",
   server_domain: "https://ronadav.cs.bgu.ac.il",
-=======
-  // server_domain: "https://yumtum.cs.bgu.ac.il",
-  server_domain: "http://localhost:3000",
->>>>>>> c414e86115dd7218217d03aad816b5bdc44f6594
   lastSearch: localStorage.lastSearch,
   username: localStorage.username,
   async login(username) {
